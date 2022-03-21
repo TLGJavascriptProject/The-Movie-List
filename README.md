@@ -17,5 +17,6 @@
 - [] Use dynamo backend instead of mongo
 - [] Transition to React
 
-
+# Wireframe
 ![](homepage.jpg)
+![](Slide1.jpeg)
