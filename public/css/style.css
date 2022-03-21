@@ -1,0 +1,23 @@
+.homepage {
+    background-color: #000000;
+}
+
+.home-title {
+    color: #ffffff;
+    font-size: 5rem;
+}
+
+.home-subtitle {
+    color: #ffffff;
+    font-size: 3rem;
+}
+
+.card-poster {
+    min-height: 417px !important;
+}
+
+.movie-card {
+    background-color: #000000;
+    box-shadow:  0 0.5rem 1rem rgba(255, 255, 255, 0.5) !important;
+    color: #ffffff;
+}
