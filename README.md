@@ -16,3 +16,6 @@
 - [] Allow users to search by release year
 - [] Use dynamo backend instead of mongo
 - [] Transition to React
+
+
+![](homepage.jpg)
