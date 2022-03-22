@@ -11,9 +11,6 @@ const { process_params } = require("express/lib/router");
 const { get } = require("express/lib/response");
 const req = require("express/lib/request");
 require("dotenv").config();
-const fetch = require("node-fetch");
-const uri =
-  "https://api.themoviedb.org/3/movie/711?api_key=97bec1ad4a2b74922d6d176e79edf55c&language=en-US";
 
 // Auth0 Configuration
 const config = {
