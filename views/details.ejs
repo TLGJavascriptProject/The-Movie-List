@@ -20,13 +20,13 @@
   <body
     class="background mt-5"
     style="
-      background-image: url('https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>');
+      --background-image: url('https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>');
     "
   >
     <div class="container">
       <div class="row">
         <div class="center">
-          <h1><%= movie.title %></h1>
+          <h1 class="home-title"><%= movie.title %></h1>
           <h4><%= movie.tagline %></h4>
           <h6><%= movie.genre %></h6>
           <h6><%= new Date(movie.release_date) %></h6>
@@ -69,14 +69,24 @@
       <div class="row center">
         <div>
           <a
-            href="/add_rating?id=<%= movie.id  %>&release_date=<%= movie.release_date%>"
+            href="/add_comment?id=<%= movie.id  %>&release_date=<%= movie.release_date%>"
             type="button"
             class="btn btn-primary"
-            >Submit Comment</a
+            >Add Comment</a
           >
         </div>
       </div>
       <div class="row center">
+        <% comments.forEach((comment) => { %>
+        <div class="card" style="width: 18rem">
+          <img src="..." class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text"><%= comment.comment %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+        <% }) %>
         <div>All comments</div>
       </div>
     </div>
