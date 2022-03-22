@@ -12,33 +12,25 @@ exports.add_rating = (req, res) => {
     const movie_id = req.query.id;
     const release_date = req.query.release_date;
     const value = req.query.value;
-    let movie_mongo_id;
     const name = req.oidc.user.name;
     const email = req.oidc.user.email;
-    let user_mongo_id;
 
     users.findOne({
-        email: email
-    })
-    .then(user => {
-        if (user === null) {
-            let user = {
-                name: name,
-                email: email,
-            };
-            users.create(user);
+            email: email
+        })
+        .then(user => {
 
-            users.findOne({
-                email: email
-            })
-            .then(newUser => {
-                user_mongo_id = newUser._id.toString();
-            })
-            .catch(err => console.error(err));
-        } else {
-            user_mongo_id = user._id.toString();
-        }
-        movies.findOne({
+            if (user === null) {
+                let user = {
+                    name: name,
+                    email: email,
+                };
+                users.create(user);
+            }
+        })
+        .catch(err => console.error(err));
+
+    movies.findOne({
             movie_id: movie_id
         })
         .then(result => {
@@ -48,28 +40,37 @@ exports.add_rating = (req, res) => {
                     release_date: new Date(release_date)
                 };
                 movies.create(movie);
-
-                movies.findOne({
-                    movie_id: movie_id
-                })
-                .then(newResult => {
-                    movie_mongo_id = newResult._id.toString();
-                })
-                .catch(err => console.error(err));
-            } else {
-                movie_mongo_id = result._id.toString();
             }
-            const rating = {
-                user_id: user_mongo_id,
-                movie_id: movie_mongo_id,
-                rating: value
-            };
-            ratings.create(rating);
         })
         .catch(err => console.error(err));
-    })
-    .catch(err => console.error(err));
-    res.redirect(`/details?id=${movie_id}`)
+
+    ratings.find({
+            'category.movie_id': 'movie_id',
+        })
+        .then(result => {
+            if (result.user_id !== email) {
+                const rating = {
+                    user_id: email,
+                    movie_id: movie_id,
+                    rating: value
+                };
+                ratings.create(rating);
+            } else {
+                ratings.findOneAndUpdate({
+                        user_id: email,
+                        movie_id: movie_id
+                    }, {
+                        rating: value
+                    },
+                    (err) => {
+                        if (err) {
+                            console.error(err)
+                        }
+                    });
+            }
+            res.redirect(`/details?id=${movie_id}`)
+        })
+        .catch(err => console.error(err));
 };
 
 // UNTESTED ROUTE add comment to movie route
@@ -77,34 +78,26 @@ exports.add_comment = (req, res) => {
     const movie_id = req.query.id;
     const release_date = req.query.release_date;
     const createdOn = new Date();
-    let movie_mongo_id;
     const name = req.oidc.user.name;
     const email = req.oidc.user.email;
-    let user_mongo_id;
-    const textBody = 'She is a monster!'//req.body.comment;
+    const textBody = req.body.comment;
 
     users.findOne({
-        email: email
-    })
-    .then(user => {
-        if (user === null) {
-            let user = {
-                name: name,
-                email: email,
-            };
-            users.create(user);
+            email: email
+        })
+        .then(user => {
 
-            users.findOne({
-                email: email
-            })
-            .then(newUser => {
-                user_mongo_id = newUser._id.toString();
-            })
-            .catch(err => console.error(err));
-        } else {
-            user_mongo_id = user._id.toString();
-        }
-        movies.findOne({
+            if (user === null) {
+                let user = {
+                    name: name,
+                    email: email,
+                };
+                users.create(user);
+            }
+        })
+        .catch(err => console.error(err));
+
+    movies.findOne({
             movie_id: movie_id
         })
         .then(result => {
@@ -114,83 +107,72 @@ exports.add_comment = (req, res) => {
                     release_date: new Date(release_date)
                 };
                 movies.create(movie);
-
-                movies.findOne({
-                    movie_id: movie_id
-                })
-                .then(newResult => {
-                    movie_mongo_id = newResult._id.toString();
-                })
-                .catch(err => console.error(err));
-            } else {
-                movie_mongo_id = result._id.toString();
             }
-            const comment = {
-                user_id: user_mongo_id,
-                movie_id: movie_mongo_id,
-                createdOn: createdOn,
-                comment: textBody
-            };
-            comments.create(comment);
         })
         .catch(err => console.error(err));
-    })
-    .catch(err => console.error(err));
-    res.redirect(`/details?id=${movie_id}`)
+    const comment = {
+        user_id: email,
+        movie_id: movie_id,
+        createdOn: createdOn,
+        comment: textBody
+    };
+    comments.create(comment)
+    .then(result => {
+        res.redirect(`/details?id=${movie_id}`)
+    });
 };
 
 // individual movie details page's route
-exports.get_details = async(req, res) => {
-  const movie_id = req.query.id;
-  let movie_mongo_id;
-  const get_movie = await tmdb.get_movie(
-    `${uri}${movie_id}?api_key=${process.env.API_KEY}&language=en-US`
-  );
-  const title = get_movie.title;
+exports.get_details = async (req, res) => {
+    const movie_id = req.query.id;
+    let movie_mongo_id;
+    const get_movie = await tmdb.get_movie(
+        `${uri}${movie_id}?api_key=${process.env.API_KEY}&language=en-US`
+    );
+    const title = get_movie.title;
 
-  movies.findOne(
-    {
-      movie_id: movie_id,
-    },
-    (err, doc) => {
-      if (err) {
-        console.error(err);
-      }
-      if (doc !== null) {
-        movie_mongo_id = doc._id.toString();
-        ratings
-          .find({
-            'category.movie_id': 'movie_mongo_id',
-          })
-          .then((ratings) => {
-            comments
-              .find({
-                'category.movie_id': 'movie_mongo_id',
-              })
-              .then((comments) => {
+    movies.findOne({
+            movie_id: movie_id,
+        },
+        (err, doc) => {
+            if (err) {
+                console.error(err);
+            }
+            if (doc !== null) {
+                movie_mongo_id = doc._id.toString();
+                ratings
+                    .find({
+                        'category.movie_id': 'movie_mongo_id',
+                    })
+                    .then((ratings) => {
+                        comments
+                            .find({
+                                'category.movie_id': 'movie_mongo_id',
+                            })
+                            .then((comments) => {
+                                res.render('details', {
+                                    title: title,
+                                    movie: get_movie,
+                                    ratings: ratings,
+                                    comments: comments,
+                                });
+                            });
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } else {
+                const ratings = [];
+                const comments = [];
                 res.render('details', {
-                  title: title,
-                  movie: get_movie,
-                  ratings: ratings,
-                  comments: comments,
+                    title: title,
+                    movie: get_movie,
+                    ratings: ratings,
+                    comments: comments,
                 });
-              });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else {
-        const ratings = [];
-        const comments = [];
-        res.render('details', {
-          title: title,
-          movie: get_movie,
-          ratings: ratings,
-          comments: comments,
-        });
-      }
-    }
-  );
+            }
+        }
+    );
     movies.findOne({
         movie_id: movie_id
     }, (err, doc) => {
