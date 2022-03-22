@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <% movies.forEach((movie)=> { %>
-                <a class="col-md-2 card movie-card g-0 m-1" href="/description/:id">
+                <a class="col-md-2 card movie-card g-0 m-1" href="/details?id=<%= movie.id %>">
                     <img src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path %>" class="card-img-top card-poster" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">
