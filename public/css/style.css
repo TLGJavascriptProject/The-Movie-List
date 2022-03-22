@@ -1,23 +1,44 @@
 .homepage {
-    background-color: #000000;
+  background-color: #000000;
 }
 
 .home-title {
-    color: #ffffff;
-    font-size: 5rem;
+  color: #ffffff;
+  font-size: 5rem;
 }
 
 .home-subtitle {
-    color: #ffffff;
-    font-size: 3rem;
+  color: #ffffff;
+  font-size: 3rem;
 }
 
 .card-poster {
-    min-height: 417px !important;
+  min-height: 417px !important;
 }
 
 .movie-card {
-    background-color: #000000;
-    box-shadow:  0 0.5rem 1rem rgba(255, 255, 255, 0.5) !important;
-    color: #ffffff;
+  background-color: gray;
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff;
+}
+
+.background {
+  background-color: rgba(255, 255, 255, 0.6);
+  height: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+}
+
+.poster {
+  background-color: black;
+  box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 1) !important;
+  color: #ffffff;
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+  color: #000000;
 }
