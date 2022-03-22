@@ -1,8 +1,6 @@
-const express = require('express');
-const {
-    requiresAuth
-} = require('express-openid-connect');
-const tmdb = require('../controllers/tmdb')
+const express = require("express");
+const { requiresAuth } = require("express-openid-connect");
+const tmdb = require("../controllers/tmdb");
 
 const users = require('../models/users');
 const movies = require('../models/movies');
@@ -82,8 +80,6 @@ router.post('/add_rating', (req, res) => {
     res.redirect(`/details?id=${movie_id}`)
 
 });
-
-
 
 // UNTESTED ROUTE add comment to movie route
 // href="/add_rating?id=<%= movie.id  %>&release_date=<%= movie.release_date%>"
