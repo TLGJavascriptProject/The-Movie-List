@@ -154,13 +154,26 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <iframe width="1105" height="600"
-              src="https://www.youtube.com/embed/tgbNymZ7vqY">
+            <iframe width="1105" height="600" id="ytPlayer" allow="autoplay"
+            <% let loop = true %>
+            <% videos.results.forEach((video) => { %>
+              <% if(video.type === "Trailer") { %>
+                src="https://www.youtube.com/embed/<%= video.key %>">
+                <% loop = false %>
+              <% }}); if(loop) { %>
+                src="https://www.youtube.com/embed/tgbNymZ7vqY"
+                <% } %>
             </iframe>
           </div>
         </div>
       </div>
     </div>
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".btn-close").click(function() {
+      $("#trailerModal").empty();
+    });
+  });
+</script>
   </body>
 </html>
