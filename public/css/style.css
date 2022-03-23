@@ -63,7 +63,7 @@
 
 .movie-overview {
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 1);
 }
 
@@ -76,4 +76,20 @@
 
 .card-text-lg {
   font-size: 1.5rem;
+}
+
+.stars {
+  font-size: 60px;
+}
+
+.star-text {
+  font-size: 32px;
+  color: #ffffff;
+  text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 1);
+}
+
+.movie-tagline {
+  font-size: 2rem;
+  color: #ffffff;
+  text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 1);
 }
