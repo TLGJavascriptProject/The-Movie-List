@@ -114,11 +114,6 @@ exports.add_comment = (req, res) => {
     const email = req.oidc.user.email;
     const textBody = req.body.comment_text;
 
-    console.log(textBody)
-    console.log(movie_id)
-    console.log(release_date)
-    console.log(email)
-
     users.findOne({
             email: email
         })
@@ -182,15 +177,14 @@ exports.get_details = async (req, res) => {
                 console.error(err);
             }
             if (doc !== null) {
-                movie_mongo_id = doc._id.toString();
                 ratings
                     .find({
-                        'category.movie_id': 'movie_mongo_id',
+                        movie_id: movie_id,
                     })
                     .then((ratings) => {
                         comments
                             .find({
-                                'category.movie_id': 'movie_mongo_id',
+                                movie_id: movie_id,
                             })
                             .then((comments) => {
                                 res.render('details', {
@@ -229,13 +223,12 @@ exports.get_details = async (req, res) => {
             console.error(err);
         }
         if (doc !== null) {
-            movie_mongo_id = doc._id.toString();
             ratings.find({
-                    'category.movie_id': 'movie_mongo_id'
+                    movie_id: movie_id
                 })
                 .then(ratings => {
                     comments.find({
-                            'category.movie_id': 'movie_mongo_id'
+                            movie_id: movie_id
                         })
                         .then(comments => {
                             res.render('details', {
