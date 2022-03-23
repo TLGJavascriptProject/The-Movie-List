@@ -11,44 +11,57 @@
       <div class="row">
         <div class="center">
           <h1 class="home-title"><%= movie.title %></h1>
-          <h4 class="movie-info"><%= movie.tagline %></h4>
-          <h6 class="movie-info"><%= movie.genre %></h6>
-          <h6 class="movie-info"><%= new Date(movie.release_date) %></h6>
+          <h4 class="movie-tagline">"<%= movie.tagline %>"</h4>
+          <% const date = new Date(movie.release_date);
+          const formattedDate = date.toLocaleString("en-US", {
+             month: "short",
+             day: "numeric",
+             year: "numeric"
+          });%>
+          <h6 class="movie-info">Released on: <%= formattedDate %>, <%= movie.genres[0].name %></h6>
           <div class="poster-container">
+            <a href="" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#trailerModal">
             <img
               class="poster"
               src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path%>"
               alt=""
             />
+          </a>
           </div>
+          <br />
+          <p>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#trailerModal">Watch Trailer</button>
+          </p>
           <br />
           <h6 class="movie-overview"><%= movie.overview %></h6>
         </div>
+        <br />
       </div>
       <div class="row center">
-        <div>
+        <p class="star-text">Your review:</p>
+        <div class="stars">
           <a
-            href="/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"
+            href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"
             ><i class="ratingStars far fa-star"></i
           ></a>
           <a
-            href="/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"
+            href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"
             ><i class="ratingStars far fa-star"></i
           ></a>
           <a
-            href="/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=3"
+            href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=3"
             ><i class="ratingStars far fa-star"></i
           ></a>
           <a
-            href="/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=4"
+            href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=4"
             ><i class="ratingStars far fa-star"></i
           ></a>
           <a
-            href="/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=5"
+            href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=5"
             ><i class="ratingStars far fa-star"></i
           ></a>
         </div>
+        <br />
         <!-- prettier-ignore -->
         <% const numberOfRatings = ratings.length;
         let ratingsSum = 0;
@@ -58,8 +71,9 @@
         }) %>
         <% ratingsSum = ratingsSum / numberOfRatings %>
         <div>
+          <p class="star-text">Average reviews:</p>
           <% if(ratingsSum === 5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
@@ -67,7 +81,7 @@
             <i class="ratingStars fas fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 4.5 && ratingsSum < 5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
@@ -75,7 +89,7 @@
             <i class="ratingStars fas fa-star-half"></i>
           </p>
           <% } else if(ratingsSum >= 4 && ratingsSum < 4.5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
@@ -83,7 +97,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 3.5 && ratingsSum < 4) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
@@ -91,7 +105,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 3 && ratingsSum < 3.5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
@@ -99,7 +113,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 2.5 && ratingsSum < 3) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star-half"></i>
@@ -107,7 +121,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 2 && ratingsSum < 2.5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars far fa-star"></i>
@@ -115,7 +129,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum >= 1.5 && ratingsSum < 2) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars fas fa-star-half"></i>
             <i class="ratingStars far fa-star"></i>
@@ -123,7 +137,7 @@
             <i class="ratingStars far fa-star"></i>
           </p>
           <% } else if(ratingsSum < 1.5) { %>
-          <p>
+          <p class="stars">
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars far fa-star"></i>
             <i class="ratingStars far fa-star"></i>
@@ -156,7 +170,7 @@
             <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <iframe width="1105" height="600" id="ytPlayer" allow="autoplay"
+            <iframe width="1105" height="600" id="ytPlayer" allow="accelerometer; autoplay;"
             <% let loop = true %>
             <% videos.results.forEach((video) => { %>
               <% if(video.type === "Trailer") { %>
@@ -171,11 +185,10 @@
       </div>
     </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#disposeBtn").click(function() {
-            $("#myModal").modal('dispose');
-        });
-    });
+  const modal = document.getElementById("trailerModal")
+$('#trailerModal').on('hidden.bs.modal', function () {
+    modal.dispose()
+});
 </script>
   </body>
 </html>
