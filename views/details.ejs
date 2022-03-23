@@ -23,13 +23,42 @@
       --background-image: url('https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>');
     "
   >
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="center">
           <h1 class="home-title"><%= movie.title %></h1>
-          <h4><%= movie.tagline %></h4>
-          <h6><%= movie.genre %></h6>
-          <h6><%= new Date(movie.release_date) %></h6>
+          <h4 class="movie-info">"<%= movie.tagline %>"</h4>
+          <h6 class="movie-info"><%= movie.genres[0].name %></h6>
+          <!-- prettier-ignore -->
+          <% const date = new Date(movie.release_date);
+          const formattedDate = date.toLocaleString("en-US", {
+             month: "short",
+             day: "numeric",
+             year: "numeric"
+          });
+       %>
+          <h6 class="movie-info">Release date: <%= formattedDate %></h6>
           <div class="poster-container">
             <img
               class="poster"
@@ -38,7 +67,25 @@
             />
           </div>
           <br />
-          <h6><%= movie.overview %></h6>
+          <p>
+            <button
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target=".#trailerModal"
+            >
+              Play Trailer
+            </button>
+            <button
+              type="button"
+              class="btn btn-info btn-lg"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              Open Modal
+            </button>
+          </p>
+          <br />
+          <h6 class="movie-overview"><%= movie.overview %></h6>
         </div>
       </div>
       <div class="row center">
@@ -137,7 +184,7 @@
             <i class="ratingStars far fa-star"></i>
             <i class="ratingStars far fa-star"></i>
           </p>
-          <% } else { %>
+          <% } else if(ratingsSum < 1.5) { %>
           <p>
             <i class="ratingStars fas fa-star"></i>
             <i class="ratingStars far fa-star"></i>
@@ -145,29 +192,63 @@
             <i class="ratingStars far fa-star"></i>
             <i class="ratingStars far fa-star"></i>
           </p>
-          <% }%>
+          <% } else { %>
+          <p class="movie-overview">No ratings for this movie yet</p>
+          <% } %>
         </div>
       </div>
       <div class="row center">
         <div>
           <a
-            href="/add_comment?id=<%= movie.id  %>&release_date=<%= movie.release_date%>"
+            href="/add_comment?id=<%= movie.id %>&release_date=<%= movie.release_date%>"
             type="button"
             class="btn btn-primary"
             >Add Comment</a
           >
         </div>
       </div>
+      <br />
       <div class="row center">
         <% comments.forEach((comment) => { %>
-        <div class="card" style="width: 18rem">
+        <div class="card border-0">
           <div class="card-body">
-            <p class="card-text"><%= comment.comment %></p>
+            <p class="card-text-lg"><%= comment.comment %></p>
+            <p>Reviewed by <%= comment.user_id %></p>
             <a href="#" class="btn btn-primary">Update</a>
-            <a href="#" class="btn btn-primary">Delete</a>
+            <a href="/<%= comment.id %>/delete" class="btn btn-primary"
+              >Delete</a
+            >
           </div>
         </div>
         <% }) %>
+      </div>
+    </div>
+    <div class="modal" id="trailerModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
