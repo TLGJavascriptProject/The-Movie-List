@@ -169,6 +169,9 @@ exports.get_details = async (req, res) => {
     const get_movie = await tmdb.get_movie(
         `${uri}${movie_id}?api_key=${process.env.API_KEY}&language=en-US`
     );
+    const get_trailer = await tmdb.get_movie(
+        `${uri}${movie_id}/videos?api_key=${process.env.API_KEY}&language=en-US`
+    )
     const title = get_movie.title;
 
     movies.findOne({
@@ -193,6 +196,7 @@ exports.get_details = async (req, res) => {
                                 res.render('details', {
                                     title: title,
                                     movie: get_movie,
+                                    videos: get_trailer,
                                     ratings: ratings,
                                     comments: comments,
                                     isAuthenticated: req.oidc.isAuthenticated(),
@@ -209,6 +213,7 @@ exports.get_details = async (req, res) => {
                 res.render('details', {
                     title: title,
                     movie: get_movie,
+                    videos: get_trailer,
                     ratings: ratings,
                     comments: comments,
                     isAuthenticated: req.oidc.isAuthenticated(),
@@ -236,6 +241,7 @@ exports.get_details = async (req, res) => {
                             res.render('details', {
                                 title: title,
                                 movie: get_movie,
+                                videos: get_trailer,
                                 ratings: ratings,
                                 comments: comments,
                                 isAuthenticated: req.oidc.isAuthenticated(),
@@ -253,6 +259,7 @@ exports.get_details = async (req, res) => {
             res.render('details', {
                 title: title,
                 movie: get_movie,
+                videos: get_trailer,
                 ratings: ratings,
                 comments: comments,
                 isAuthenticated: req.oidc.isAuthenticated(),
