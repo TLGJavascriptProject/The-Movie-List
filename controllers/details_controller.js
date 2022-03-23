@@ -8,9 +8,9 @@ const comments = require('../models/comments');
 const uri = 'https://api.themoviedb.org/3/movie/';
 
 exports.delete_comment = (req, res) => {
-    const movie_id = req.query.id;
+    const movie_id = req.body.movie_id;
 
-    candidates.findByIdAndDelete({
+    comments.findByIdAndDelete({
         _id: req.params.id,
     }, (err) => {
         if (err) {

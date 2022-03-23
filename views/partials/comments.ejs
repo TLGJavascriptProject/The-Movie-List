@@ -22,17 +22,29 @@
                 <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
                 <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" class="btn btn-primary mt-3">Update</button>
+        </form>
+
+        <form id="<%= comment.id %>_delete" class="card-body" action="details/<%= comment.id %>/delete" method="post" style="display: none;">
+            <div class="form-floating">
+                <textarea name="comment_text" type="text" class="form-control" 
+                    placeholder="Leave a comment here" id="floatingTextarea2" 
+                    style="height: 100px"><%= comment.comment %></textarea>
+                <label for="floatingTextarea2">Comments</label>
+                <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
+                <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Delete</button>
         </form>
 
         <% if (user.email===comment.user_id) { %>
             <div class="card-footer">
-                <button onclick="toggle('<%= comment.id %>')">Update</button>
-                <a href="#">Delete</a>
+                <button onclick="updateComment('<%= comment.id %>')">Update</button>
+                <button onclick="deleteComment('<%= comment.id %>')">Delete</button>
             </div>
             <% } %>
                 <script>
-                    const toggle = (e) => {
+                    const updateComment = (e) => {
                         console.log(e)
                         const section = document.getElementById(e);
                         const update_form = document.getElementById(`${e}_form`);
@@ -44,6 +56,19 @@
                             section.style.display = 'none';
                             update_form.style.display = 'block'
                             console.log(update_form)
+                        }
+                    };
+
+                    const deleteComment = (e) => {
+                        console.log(e)
+                        const section = document.getElementById(e);
+                        const update_delete = document.getElementById(`${e}_delete`);
+                        if (section.style.display === 'none') {
+                            section.style.display = 'block';
+                            update_delete.style.display = 'none'
+                        } else {
+                            section.style.display = 'none';
+                            update_delete.style.display = 'block'
                         }
                     };
                 </script>
