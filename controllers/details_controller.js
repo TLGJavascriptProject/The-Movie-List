@@ -157,7 +157,10 @@ exports.add_comment = (req, res) => {
 // individual movie details page's route
 exports.get_details = async (req, res) => {
     const movie_id = req.query.id;
-    let movie_mongo_id;
+    let user = null;
+    if (req.oidc.isAuthenticated()) {
+        user = req.oidc.user;
+    }
     const get_movie = await tmdb.get_movie(
         `${uri}${movie_id}?api_key=${process.env.API_KEY}&language=en-US`
     );
@@ -187,6 +190,8 @@ exports.get_details = async (req, res) => {
                                     movie: get_movie,
                                     ratings: ratings,
                                     comments: comments,
+                                    isAuthenticated: req.oidc.isAuthenticated(),
+                                    user: user,
                                 });
                             });
                     })
@@ -201,6 +206,8 @@ exports.get_details = async (req, res) => {
                     movie: get_movie,
                     ratings: ratings,
                     comments: comments,
+                    isAuthenticated: req.oidc.isAuthenticated(),
+                    user: user,
                 });
             }
         }
@@ -225,7 +232,9 @@ exports.get_details = async (req, res) => {
                                 title: title,
                                 movie: get_movie,
                                 ratings: ratings,
-                                comments: comments
+                                comments: comments,
+                                isAuthenticated: req.oidc.isAuthenticated(),
+                                user: user,
                             });
                         })
                 })
@@ -240,7 +249,9 @@ exports.get_details = async (req, res) => {
                 title: title,
                 movie: get_movie,
                 ratings: ratings,
-                comments: comments
+                comments: comments,
+                isAuthenticated: req.oidc.isAuthenticated(),
+                user: user,
             });
         }
     })
