@@ -22,8 +22,8 @@ exports.delete_comment = (req, res) => {
 };
 
 exports.update_comment = (req, res) => {
-    const movie_id = req.query.id;
-    const textBody = req.body.comment;
+    const movie_id = req.body.movie_id;
+    const textBody = req.body.comment_text;
 
     comments.findByIdAndUpdate({
         _id: req.params.id
