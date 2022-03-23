@@ -7,13 +7,19 @@ const uri = 'https://api.themoviedb.org/3/movie/';
 
 // homepage route
 router.get('/', async (req, res) => {
-  const now_playing = await tmdb.get_now_playing(
-    `${uri}now_playing?api_key=${process.env.API_KEY}&language=en-US&page=1`
-  );
-  res.render('index', {
-    title: 'Homepage',
-    movies: now_playing,
-  });
+    const now_playing = await tmdb.get_now_playing(
+        `${uri}now_playing?api_key=${process.env.API_KEY}&language=en-US&page=1`
+    );
+    let user = null;
+    if (req.oidc.isAuthenticated()) {
+        user = req.oidc.user;
+    }
+    res.render('index', {
+        title: 'Homepage',
+        movies: now_playing,
+        isAuthenticated: req.oidc.isAuthenticated(),
+        user: user,
+    });
 });
 
 module.exports = router;

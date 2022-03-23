@@ -1,3 +1,7 @@
+.navbar-nav {
+  flex-direction: row !important;
+}
+
 .homepage {
   background-color: #000000;
 }
@@ -5,11 +9,13 @@
 .home-title {
   color: #ffffff;
   font-size: 5rem;
+  text-shadow: 0.2rem 0.2rem rgba(0, 0, 0, 1);
 }
 
 .home-subtitle {
   color: #ffffff;
   font-size: 3rem;
+  text-shadow: 0.2rem 0.2rem rgba(0, 0, 0, 1);
 }
 
 .card-poster {
@@ -17,8 +23,13 @@
 }
 
 .movie-card {
-  background-color: gray;
+  background-color: #000000;
   box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.movie-card:hover {
   color: #ffffff;
 }
 
