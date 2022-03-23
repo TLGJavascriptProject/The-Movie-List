@@ -1,36 +1,64 @@
-<div class="row center">
-    <% comments.forEach((comment)=> { %>
-        <div class="card col-md-6 offset-3">
-            <h5 class="card-header">
-                <span class="d-flex justify-content-start" style="font-size: 1rem;">
-                    <%= comment.user_id%>
-                </span>
-                <span class="d-flex justify-content-end" style="font-size: .5rem;">
-                    <%= comment.createdOn%>
-                </span>
-            </h5>
-            <div class="card-body">
-                <p class="card-text">
-                    <%= comment.comment %>
-                </p>
-                <% if (user.email === comment.user_id) { %>
-                    <a href="#">Update</a>
-                    <a href="#">Delete</a>
-                    <% } %>
-            </div>
+<% comments.forEach((comment)=> { %>
+    <div class="card col-md-6 offset-3">
+        <h5 class="card-header">
+            <span class="d-flex justify-content-start" style="font-size: 1rem;">
+                <%= comment.user_id%>
+            </span>
+            <span class="d-flex justify-content-end" style="font-size: .5rem;">
+                <%= comment.createdOn%>
+            </span>
+        </h5>
+        <div id="<%= comment.id %>" class="card-body">
+            <p class="card-text">
+                <%= comment.comment %>
+            </p>
         </div>
-        <% }) %>
-            <form class="card col-md-6 offset-3" action="details/add_comment" method="post" id="add_comment">
-                <h5 class="card-header">Comment</h5>
-                <div class="card-body">
-                    <div class="form-floating">
-                        <input name="comment_text" type="text" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                            style="height: 100px"></input>
-                        <label for="floatingTextarea2">Comments</label>
-                        <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
-                        <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <form id="<%= comment.id %>_form" class="card-body" action="details/<%= comment.id %>/update" method="post" style="display: none;">
+            <div class="form-floating">
+                <textarea name="comment_text" type="text" class="form-control" 
+                    placeholder="Leave a comment here" id="floatingTextarea2" 
+                    style="height: 100px"><%= comment.comment %></textarea>
+                <label for="floatingTextarea2">Comments</label>
+                <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
+                <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+
+        <% if (user.email===comment.user_id) { %>
+            <div class="card-footer">
+                <button onclick="toggle('<%= comment.id %>')">Update</button>
+                <a href="#">Delete</a>
+            </div>
+            <% } %>
+                <script>
+                    const toggle = (e) => {
+                        console.log(e)
+                        const section = document.getElementById(e);
+                        const update_form = document.getElementById(`${e}_form`);
+                        if (section.style.display === 'none') {
+                            section.style.display = 'block';
+                            update_form.style.display = 'none'
+                            console.log(update_form.style.display)
+                        } else {
+                            section.style.display = 'none';
+                            update_form.style.display = 'block'
+                            console.log(update_form)
+                        }
+                    };
+                </script>
+    </div>
+    <% }) %>
+        <form class="card col-md-6 offset-3" action="details/add_comment" method="post" id="add_comment">
+            <h5 class="card-header">Comment</h5>
+            <div class="card-body">
+                <div class="form-floating">
+                    <textarea name="comment_text" type="text" class="form-control" placeholder="Leave a comment here"
+                        id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Comments</label>
+                    <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
+                    <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
                 </div>
-            </form>
-</div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </div>
+        </form>
