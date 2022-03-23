@@ -64,7 +64,89 @@
             ><i class="ratingStars far fa-star"></i
           ></a>
         </div>
-        <div>average rating</div>
+        <!-- prettier-ignore -->
+        <% const numberOfRatings = ratings.length;
+        let ratingsSum = 0;
+        ratings.forEach ((rating) => { 
+          let ratingNum = parseInt(rating.rating)
+          ratingsSum = ratingsSum + ratingNum
+        }) %>
+        <% ratingsSum = ratingsSum / numberOfRatings %>
+        <div>
+          <% if(ratingsSum === 5) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 4.5 && ratingsSum < 5) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half"></i>
+          </p>
+          <% } else if(ratingsSum >= 4 && ratingsSum < 4.5) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 3.5 && ratingsSum < 4) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 3 && ratingsSum < 3.5) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 2.5 && ratingsSum < 3) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 2 && ratingsSum < 2.5) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else if(ratingsSum >= 1.5 && ratingsSum < 2) { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% } else { %>
+          <p>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+          </p>
+          <% }%>
+        </div>
       </div>
       <div class="row center">
         <div>
@@ -79,15 +161,13 @@
       <div class="row center">
         <% comments.forEach((comment) => { %>
         <div class="card" style="width: 18rem">
-          <img src="..." class="card-img-top" alt="..." />
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
             <p class="card-text"><%= comment.comment %></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="#" class="btn btn-primary">Update</a>
+            <a href="#" class="btn btn-primary">Delete</a>
           </div>
         </div>
         <% }) %>
-        <div>All comments</div>
       </div>
     </div>
   </body>
