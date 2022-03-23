@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(auth(config));
 app.use('/', routes);
-app.use('/', details_routes)
+app.use('/details', details_routes)
 
 // socket.io instantiation
 const server = require('http').createServer(app);

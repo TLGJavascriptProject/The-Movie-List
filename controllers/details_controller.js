@@ -107,12 +107,17 @@ exports.add_rating = (req, res) => {
 
 // UNTESTED ROUTE add comment to movie route
 exports.add_comment = (req, res) => {
-    const movie_id = req.query.id;
-    const release_date = req.query.release_date;
+    const movie_id = req.body.movie_id;
+    const release_date = req.body.release_date;
     const createdOn = new Date();
     const name = req.oidc.user.name;
     const email = req.oidc.user.email;
-    const textBody = req.body.comment;
+    const textBody = req.body.comment_text;
+
+    console.log(textBody)
+    console.log(movie_id)
+    console.log(release_date)
+    console.log(email)
 
     users.findOne({
             email: email
