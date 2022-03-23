@@ -15,4 +15,10 @@ router.get('/add_rating', requiresAuth(), details_controller.add_rating);
 // GET add comment to movie details page
 router.get('/add_comment', requiresAuth(), details_controller.add_comment);
 
+// POST update comment on movie details page
+router.post('/:id/update', requiresAuth(), details_controller.update_comment);
+
+// POST delete comment from movie details page
+router.post('/:id/delete', requiresAuth(), details_controller.delete_comment);
+
 module.exports = router;

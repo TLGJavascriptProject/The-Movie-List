@@ -1,0 +1,26 @@
+<nav class="navbar sticky-top navbar-dark bg-dark">
+    <div class="container-fluid">
+        <% if (!isAuthenticated) { %>
+        <span class="navbar-brand">
+            <img src="https://cdn.imgbin.com/12/24/4/imgbin-movie-icons-film-cinema-others-N2P6ZxSCqJFK6CUuTWFwzr6gd.jpg"
+                    height="35" alt="placeholder photo">
+            <a class="navbar-brand" href="/">The Movie List</a>
+        </span>
+        <% } else { %>
+        <span class="navbar-brand">
+            <img src="<%= user.picture %>" height="35" alt=" ">
+            <a class="navbar-brand" href="/">
+                <%= user.nickname %>
+            </a>
+        </span>
+        <% } %>
+        <ul class="navbar-nav">
+        <% if (!isAuthenticated) { %>
+            <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
+        <% } else { %>
+            <li class="nav-item mx-3"><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item mx-3"><a href="/logout/" class="nav-link">Logout</a></li>
+        <% } %>
+        </ul>
+    </div>
+</nav>

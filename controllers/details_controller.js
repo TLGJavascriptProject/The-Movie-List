@@ -7,6 +7,38 @@ const comments = require('../models/comments');
 
 const uri = 'https://api.themoviedb.org/3/movie/';
 
+exports.delete_comment = (req, res) => {
+    const movie_id = req.query.id;
+
+    candidates.findByIdAndDelete({
+        _id: req.params.id,
+    }, (err) => {
+        if (err) {
+            console.error(err)
+        } else {
+            res.redirect(`/details?id=${movie_id}`);
+        }
+    });
+};
+
+exports.update_comment = (req, res) => {
+    const movie_id = req.query.id;
+    const textBody = req.body.comment;
+
+    comments.findByIdAndUpdate({
+        _id: req.params.id
+    }, {
+        comment: textBody
+    }, {
+        upsert: true
+    }, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.redirect(`/details?id=${movie_id}`);
+        }
+    });
+};
 
 exports.add_rating = (req, res) => {
     const movie_id = req.query.id;
@@ -68,7 +100,7 @@ exports.add_rating = (req, res) => {
                         }
                     });
             }
-            res.redirect(`/details?id=${movie_id}`)
+            res.redirect(`/details?id=${movie_id}`);
         })
         .catch(err => console.error(err));
 };
@@ -117,9 +149,9 @@ exports.add_comment = (req, res) => {
         comment: textBody
     };
     comments.create(comment)
-    .then(result => {
-        res.redirect(`/details?id=${movie_id}`)
-    });
+        .then(result => {
+            res.redirect(`/details?id=${movie_id}`);
+        });
 };
 
 // individual movie details page's route
