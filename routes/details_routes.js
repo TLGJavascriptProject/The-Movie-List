@@ -7,13 +7,13 @@ const details_controller = require('../controllers/details_controller');
 const router = express.Router();
 
 // GET details page
-router.get('/details', details_controller.get_details);
+router.get('/', details_controller.get_details);
 
 // GET add rating to movie details page
 router.get('/add_rating', requiresAuth(), details_controller.add_rating);
 
 // GET add comment to movie details page
-router.get('/add_comment', requiresAuth(), details_controller.add_comment);
+router.post('/add_comment', requiresAuth(), details_controller.add_comment);
 
 // POST update comment on movie details page
 router.post('/:id/update', requiresAuth(), details_controller.update_comment);
