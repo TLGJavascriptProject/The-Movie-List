@@ -37,7 +37,7 @@
             <button type="submit" class="btn btn-danger btn-comment mt-3">Delete</button>
         </form>
 
-        <% if (user.email===comment.user_id) { %>
+        <% if (users !== null && user.email === comment.user_id) { %>
             <div class="d-flex justify-content-between card-footer card-footer-comment">
                 <button class="d-flex justify-content-start card-link" onclick="updateComment('<%= comment.id %>')">Update</button>
                 <button class="d-flex justify-content-end card-link" onclick="deleteComment('<%= comment.id %>')">Delete</button>

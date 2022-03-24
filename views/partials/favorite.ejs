@@ -1,5 +1,5 @@
 <div class="row d-flex justify-content-end my-3">
-    <% if (users.favorites.includes(movie.id)) { %>
+    <% if (users !== null && users.favorites.includes(movie.id)) { %>
         <form action="details/delete_favorite" method="post" class="col-1 d-flex justify-content-center favorite">
             <a href="/details/delete_favorite?id=<%= movie.id %>"><i class="ratingStars fas fa-star"></i></a>
           </form>
