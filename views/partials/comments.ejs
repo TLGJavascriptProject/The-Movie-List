@@ -1,19 +1,19 @@
 <% comments.forEach((comment)=> { %>
-    <div class="card col-md-6 offset-3">
-        <h5 class="card-header">
+    <div class="col-md-6 offset-3 card card-comment">
+        <h5 class="d-flex justify-content-between card-header card-header-comment">
             <span class="d-flex justify-content-start" style="font-size: 1rem;">
                 <%= comment.user_id%>
             </span>
-            <span class="d-flex justify-content-end" style="font-size: .5rem;">
+            <span class="d-flex justify-content-end align-items-center" style="font-size: .5rem;">
                 <%= comment.createdOn%>
             </span>
         </h5>
-        <div id="<%= comment.id %>" class="card-body">
+        <div id="<%= comment.id %>" class="card-body card-body-comment">
             <p class="card-text">
                 <%= comment.comment %>
             </p>
         </div>
-        <form id="<%= comment.id %>_form" class="card-body" action="details/<%= comment.id %>/update" method="post" style="display: none;">
+        <form id="<%= comment.id %>_form" class="card-body card-body-comment" action="details/<%= comment.id %>/update" method="post" style="display: none;">
             <div class="form-floating">
                 <textarea name="comment_text" type="text" class="form-control" 
                     placeholder="Leave a comment here" id="floatingTextarea2" 
@@ -22,10 +22,10 @@
                 <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
                 <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Update</button>
+            <button type="submit" class="btn btn-success btn-comment mt-3">Update</button>
         </form>
 
-        <form id="<%= comment.id %>_delete" class="card-body" action="details/<%= comment.id %>/delete" method="post" style="display: none;">
+        <form id="<%= comment.id %>_delete" class="card-body card-body-comment" action="details/<%= comment.id %>/delete" method="post" style="display: none;">
             <div class="form-floating">
                 <textarea name="comment_text" type="text" class="form-control" 
                     placeholder="Leave a comment here" id="floatingTextarea2" 
@@ -34,13 +34,13 @@
                 <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
                 <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Delete</button>
+            <button type="submit" class="btn btn-danger btn-comment mt-3">Delete</button>
         </form>
 
         <% if (user.email===comment.user_id) { %>
-            <div class="card-footer">
-                <button onclick="updateComment('<%= comment.id %>')">Update</button>
-                <button onclick="deleteComment('<%= comment.id %>')">Delete</button>
+            <div class="d-flex justify-content-between card-footer card-footer-comment">
+                <button class="d-flex justify-content-start card-link" onclick="updateComment('<%= comment.id %>')">Update</button>
+                <button class="d-flex justify-content-end card-link" onclick="deleteComment('<%= comment.id %>')">Delete</button>
             </div>
             <% } %>
                 <script>
@@ -48,14 +48,15 @@
                         console.log(e)
                         const section = document.getElementById(e);
                         const update_form = document.getElementById(`${e}_form`);
+                        const update_delete = document.getElementById(`${e}_delete`);
                         if (section.style.display === 'none') {
                             section.style.display = 'block';
                             update_form.style.display = 'none'
-                            console.log(update_form.style.display)
+                            update_delete.style.display = 'none'
                         } else {
                             section.style.display = 'none';
                             update_form.style.display = 'block'
-                            console.log(update_form)
+                            update_delete.style.display = 'none'
                         }
                     };
 
@@ -63,27 +64,30 @@
                         console.log(e)
                         const section = document.getElementById(e);
                         const update_delete = document.getElementById(`${e}_delete`);
+                        const update_form = document.getElementById(`${e}_form`);
                         if (section.style.display === 'none') {
                             section.style.display = 'block';
                             update_delete.style.display = 'none'
+                            update_form.style.display = 'none'
                         } else {
                             section.style.display = 'none';
                             update_delete.style.display = 'block'
+                            update_form.style.display = 'none'
                         }
                     };
                 </script>
     </div>
     <% }) %>
         <form class="card col-md-6 offset-3" action="details/add_comment" method="post" id="add_comment">
-            <h5 class="card-header">Comment</h5>
-            <div class="card-body">
+            <h5 class="card-header card-header-comment text-center">Comment</h5>
+            <div class="card-body card-body-comment">
                 <div class="form-floating">
                     <textarea name="comment_text" type="text" class="form-control" placeholder="Leave a comment here"
-                        id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Comments</label>
+                        id="textarea" style="height: 100px"></textarea>
+                    <label for="textarea">Comments</label>
                     <input name="movie_id" type="text" value="<%= movie.id %>" hidden>
                     <input name="release_date" type="text" value="<%= movie.release_date %>" hidden>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                <button type="submit" class="btn btn-warning btn-comment mt-3">Submit</button>
             </div>
         </form>

@@ -23,7 +23,7 @@
 }
 
 .movie-card {
-  background-color: #000000;
+  background-color: #000000 !important;
   box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5) !important;
   color: #ffffff;
   text-decoration: none;
@@ -68,10 +68,32 @@
 }
 
 .ratingStars {
-  color: gold;
+  color: #fff000;
 }
-.card {
+
+.card-comment {
   background-color: lightgray;
+}
+
+.card-header-comment, .card-footer-comment {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.card-body-comment {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.card-link {
+  background: none!important;
+  border: none;
+  color: #578bab;
+  padding: 0!important;
+}
+
+.btn-comment {
+  width: 100%;
 }
 
 .card-text-lg {
@@ -83,7 +105,7 @@
 }
 
 .star-text {
-  font-size: 32px;
+  font-size: 2rem;
   color: #ffffff;
   text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 1);
 }

@@ -1,76 +1,83 @@
 <%- include('partials/head.ejs') %>
 
-  <body
-    class="background"
-    style="
-      --background-image: url('https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>');
-    "
-  >
-<%- include('partials/nav.ejs') %>
-    <div class="container">
-      <div class="row">
-        <div class="center">
-          <h1 class="home-title"><%= movie.title %></h1>
-          <h4 class="movie-tagline">"<%= movie.tagline %>"</h4>
-          <% const date = new Date(movie.release_date);
-          const formattedDate = date.toLocaleString("en-US", {
-             month: "short",
-             day: "numeric",
-             year: "numeric"
-          });%>
-          <h6 class="movie-info">Released on: <%= formattedDate %>, <%= movie.genres[0].name %></h6>
-          <div class="poster-container">
-            <a href="" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#trailerModal">
-            <img
-              class="poster"
-              src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path%>"
-              alt=""
-            />
-          </a>
-          </div>
-          <br />
-          <p>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#trailerModal">Watch Trailer</button>
-          </p>
-          <br />
-          <h6 class="movie-overview"><%= movie.overview %></h6>
-        </div>
-        <br />
-      </div>
+  <body class="background" style="--background-image: 
+  url('https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>');">
+    <%- include('partials/nav.ejs') %>
+      <% const date=new Date(movie.release_date); %>
+        <% const formattedDate=date.toLocaleString("en-US", { month: "short" , day: "numeric" , year: "numeric" });%>
 
-      <%- include('partials/ratings.ejs') %>
-
-      <%- include('partials/comments.ejs') %>
-      
-    </div>
-
-    <div class="modal" id="trailerModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><%= movie.title %></h5>
-            <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="container my-5">
+            <div class="row d-flex justify-content-center text-center">
+              <h1 class="home-title mb-3">
+                <%= movie.title %>
+              </h1>
+              <h3 class="home-subtitle mb-3">
+                "<%= movie.tagline %>"
+              </h3>
+              <h5 class="col-5 movie-info d-flex justify-content-between mb-3">
+                <span class="d-flex justify-content-start"><%= movie.genres[0].name %></span> 
+                <span class="d-flex justify-content-end">Released on: <%= formattedDate %></span> 
+              </h5>
+            </div>
           </div>
-          <div class="modal-body">
-            <iframe width="1105" height="600" id="ytPlayer" allow="accelerometer; autoplay;"
-            <% let loop = true %>
-            <% videos.results.forEach((video) => { %>
-              <% if(video.type === "Trailer") { %>
-                src="https://www.youtube.com/embed/<%= video.key %>">
-                <% loop = false %>
-              <% }}); if(loop) { %>
-                src="https://www.youtube.com/embed/tgbNymZ7vqY"
-                <% } %>
-            </iframe>
+
+          <div class="container-fluid my-5">
+            <div class="row d-flex justify-content-center mb-5">
+              <div class="d-flex justify-content-center poster-container">
+                <a href="" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                  <img class="poster" src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path%>" alt="" />
+                </a>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center mb-5">
+              <button type="button" class="col-1 d-flex justify-content-center btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#trailerModal">Watch Trailer</button>
+            </div>
+
+            <div class="row d-flex justify-content-center mb-5">
+              <div class="col-6 d-flex justify-content-center">
+                <h6 class="movie-overview">
+                  <%= movie.overview %>
+                </h6>
+              </div>
+            </div>
+
+            <%- include('partials/ratings.ejs') %>
+              <%- include('partials/comments.ejs') %>
+
           </div>
-        </div>
-      </div>
-    </div>
-<script type="text/javascript">
-  const modal = document.getElementById("trailerModal")
-$('#trailerModal').on('hidden.bs.modal', function () {
-    modal.dispose()
-});
-</script>
+
+          <div class="modal" id="trailerModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    <%= movie.title %>
+                  </h5>
+                  <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <iframe width="1105" height="600" id="ytPlayer" allow="accelerometer; autoplay;" <% let loop=true %>
+                    <% videos.results.forEach((video)=> { %>
+                      <% if(video.type==="Trailer" ) { %>
+                        src="https://www.youtube.com/embed/<%= video.key %>">
+                          <% loop=false %>
+                            <% }}); if(loop) { %>
+                              src="https://www.youtube.com/embed/tgbNymZ7vqY"
+                              <% } %>
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script type="text/javascript">
+            const modal = document.getElementById("trailerModal")
+            $('#trailerModal').on('hidden.bs.modal', function () {
+              modal.dispose()
+            });
+          </script>
   </body>
-</html>
+
+  </html>

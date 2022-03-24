@@ -48,18 +48,17 @@
                     <% found = false; %>
                 <% } %>
             </form>                                                                                         
-            <% } else { %>
-                <% if (found) { %>
-                    <p class="stars">
-                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"><i class="ratingStars far fa-star"></i></a>
-                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"><i class="ratingStars far fa-star"></i></a>
-                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=3"><i class="ratingStars far fa-star"></i></a>
-                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=4"><i class="ratingStars far fa-star"></i></a>
-                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=5"><i class="ratingStars far fa-star"></i></a>
-                </p>
-                <% } %>
             <% } %>
-        <% }) %>                                                                                            
+        <% }) %>  
+        <% if (ratings.length === 0) { %>
+            <p class="stars">
+                <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"><i class="ratingStars far fa-star"></i></a>
+                <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"><i class="ratingStars far fa-star"></i></a>
+                <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=3"><i class="ratingStars far fa-star"></i></a>
+                <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=4"><i class="ratingStars far fa-star"></i></a>
+                <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=5"><i class="ratingStars far fa-star"></i></a>
+            </p>
+        <% } %>                                                                                          
     </div>
     <br/>
     <p class="star-text d-flex justify-content-center">Average reviews:</p>
