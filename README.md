@@ -22,7 +22,7 @@
 
 Here's a walkthrough of implemented User Stories:
 
-<img src='https://recordit.co/ZPDCN9QDin.gif' width=500>
+<img src='https://recordit.co/g4ZzX9KhbB.gif' width=500>
 
 RecordIt created GIF's [External Link](https://recordit.co/K61PIGxF04).  
 GIF created with [RecordIt](https://recordit.co).
