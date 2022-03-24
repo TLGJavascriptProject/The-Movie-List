@@ -1,0 +1,152 @@
+<div class="row d-flex">
+    <p class="star-text d-flex justify-content-center">Your review:</p>
+    <!-- prettier-ignore -->
+    <div class="stars d-flex justify-content-center">
+        <% let found = true; %>
+        <% ratings.forEach((rating) => { %>
+            <% if (rating.user_id === user.email) { %>
+                <form class="stars" method="details/update_rating" action="post"></form>
+                <% if (rating.rating === 5) { %>
+                
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=2"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars fas fa-star"></i></a>
+                    <% found = false; %>
+                <% } else if (rating.rating === 4) { %>
+
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=2"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
+                    <% found = false; %>
+                <% } else if (rating.rating === 3) { %>
+                    
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=2"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
+                    <% found = false; %>
+                <% } else if (rating.rating === 2) { %>
+
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=2"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
+                    <% found = false; %>
+                <% } else if (rating.rating === 1) { %>
+
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=2"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
+                    <% found = false; %>
+                <% } %>
+            </form>                                                                                         
+            <% } else { %>
+                <% if (found) { %>
+                    <p class="stars">
+                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=3"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=4"><i class="ratingStars far fa-star"></i></a>
+                    <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=5"><i class="ratingStars far fa-star"></i></a>
+                </p>
+                <% } %>
+            <% } %>
+        <% }) %>                                                                                            
+    </div>
+    <br/>
+    <p class="star-text d-flex justify-content-center">Average reviews:</p>
+    <% const numberOfRatings = ratings.length; %>
+    <% let ratingsSum = 0; %>
+    <% ratings.forEach ((rating) => { %>
+        <% let ratingNum = parseInt(rating.rating) %>
+        <% ratingsSum = ratingsSum + ratingNum %>
+        <% }) %>
+    <% ratingsSum = ratingsSum / numberOfRatings %>
+    <div class=" d-flex justify-content-center">
+        <p class="stars">
+        <% if (ratingsSum === 5) { %>
+            
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            
+        <% } else if (ratingsSum >= 4.5 && ratingsSum < 5) { %>
+                    
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half-alt"></i>
+                    
+        <% } else if (ratingsSum >= 4 && ratingsSum < 4.5) { %>
+                        
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                            
+        <% } else if (ratingsSum >= 3.5 && ratingsSum < 4) { %>
+                                    
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half-alt"></i>
+            <i class="ratingStars far fa-star"></i>
+                                
+        <% } else if (ratingsSum >= 3 && ratingsSum < 3.5) { %>
+                                            
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                                            
+        <% } else if (ratingsSum >= 2.5 && ratingsSum < 3) { %>
+                                                    
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half-alt"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                                                    
+        <% } else if (ratingsSum >= 2 && ratingsSum < 2.5) { %>
+                                                        
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                                                            
+        <% } else if (ratingsSum >= 1.5 && ratingsSum < 2) { %>
+                                                                    
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars fas fa-star-half-alt"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                                                                    
+        <% } else if (ratingsSum < 1.5) { %>
+                                                                        
+            <i class="ratingStars fas fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+            <i class="ratingStars far fa-star"></i>
+                                                                        
+        <% } else { %>
+            No reviews for this movie yet
+        <% } %>
+        </p>
+    </div>
+</div>
