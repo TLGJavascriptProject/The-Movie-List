@@ -219,8 +219,10 @@ exports.add_comment = (req, res) => {
 exports.get_details = async (req, res) => {
     const movie_id = req.query.id;
     let user = null;
+    let email = null;
     if (req.oidc.isAuthenticated()) {
         user = req.oidc.user;
+        email = req.oidc.user.email
     }
     const get_movie = await tmdb.get_movie(
         `${uri}${movie_id}?api_key=${process.env.API_KEY}&language=en-US`
@@ -231,7 +233,7 @@ exports.get_details = async (req, res) => {
     const title = get_movie.title;
 
     users.findOne({
-            email: req.oidc.user.email
+            email: email
         })
         .then((results) => {
             movies.findOne({

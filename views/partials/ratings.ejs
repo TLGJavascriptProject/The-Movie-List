@@ -4,7 +4,7 @@
     <div class="stars d-flex justify-content-center">
         <% let notRated = true; %>
         <% ratings.forEach((rating) => { %>
-            <% if (rating.user_id === user.email) { %>
+            <% if (users !== null && rating.user_id === user.email) { %>
                 <form class="stars" method="details/update_rating" action="post"></form>
                 <% if (rating.rating === 5) { %>
                 
