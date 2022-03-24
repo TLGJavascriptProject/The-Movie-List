@@ -7,11 +7,30 @@ const comments = require('../models/comments');
 
 const uri = 'https://api.themoviedb.org/3/movie/';
 
+exports.delete_favorite = (req, res) => {
+    const movie_id = req.query.id;
+    const email = req.oidc.user.email;
+    users.findOneAndUpdate({
+        email: email
+    }, {
+        $pull: {
+            favorites: movie_id
+        }
+    }, {
+        upsert: true
+    }, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.redirect(`/details?id=${movie_id}`);
+        }
+    });
+};
+
 exports.add_favorite = (req, res) => {
     const movie_id = req.query.id;
     const email = req.oidc.user.email;
-
-    users.findOne({
+    users.findOneAndUpdate({
         email: email
     }, {
         $push: {
@@ -211,95 +230,61 @@ exports.get_details = async (req, res) => {
     )
     const title = get_movie.title;
 
-    movies.findOne({
-            movie_id: movie_id,
-        },
-        (err, doc) => {
-            if (err) {
-                console.error(err);
-            }
-            if (doc !== null) {
-                ratings
-                    .find({
-                        movie_id: movie_id,
-                    })
-                    .then((ratings) => {
-                        comments
+    users.findOne({
+            email: req.oidc.user.email
+        })
+        .then((results) => {
+            movies.findOne({
+                    movie_id: movie_id,
+                },
+                (err, doc) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    if (doc !== null) {
+                        ratings
                             .find({
                                 movie_id: movie_id,
                             })
-                            .then((comments) => {
-                                res.render('details', {
-                                    title: title,
-                                    movie: get_movie,
-                                    videos: get_trailer,
-                                    ratings: ratings,
-                                    comments: comments,
-                                    isAuthenticated: req.oidc.isAuthenticated(),
-                                    user: user,
-                                });
+                            .then((ratings) => {
+                                comments
+                                    .find({
+                                        movie_id: movie_id,
+                                    })
+                                    .then((comments) => {
+                                        res.render('details', {
+                                            title: title,
+                                            movie: get_movie,
+                                            videos: get_trailer,
+                                            ratings: ratings,
+                                            comments: comments,
+                                            isAuthenticated: req.oidc.isAuthenticated(),
+                                            user: user,
+                                            users: results,
+                                        });
+                                    });
+                            })
+                            .catch((error) => {
+                                console.error(error);
                             });
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            } else {
-                const ratings = [];
-                const comments = [];
-                res.render('details', {
-                    title: title,
-                    movie: get_movie,
-                    videos: get_trailer,
-                    ratings: ratings,
-                    comments: comments,
-                    isAuthenticated: req.oidc.isAuthenticated(),
-                    user: user,
-                });
-            }
-        }
-    );
-    movies.findOne({
-        movie_id: movie_id
-    }, (err, doc) => {
-        if (err) {
-            console.error(err);
-        }
-        if (doc !== null) {
-            ratings.find({
-                    movie_id: movie_id
-                })
-                .then(ratings => {
-                    comments.find({
-                            movie_id: movie_id
-                        })
-                        .then(comments => {
-                            res.render('details', {
-                                title: title,
-                                movie: get_movie,
-                                videos: get_trailer,
-                                ratings: ratings,
-                                comments: comments,
-                                isAuthenticated: req.oidc.isAuthenticated(),
-                                user: user,
-                            });
-                        })
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-
-        } else {
-            const ratings = [];
-            const comments = [];
-            res.render('details', {
-                title: title,
-                movie: get_movie,
-                videos: get_trailer,
-                ratings: ratings,
-                comments: comments,
-                isAuthenticated: req.oidc.isAuthenticated(),
-                user: user,
-            });
-        }
-    })
+                    } else {
+                        const ratings = [];
+                        const comments = [];
+                        res.render('details', {
+                            title: title,
+                            movie: get_movie,
+                            videos: get_trailer,
+                            ratings: ratings,
+                            comments: comments,
+                            isAuthenticated: req.oidc.isAuthenticated(),
+                            user: user,
+                            users: results,
+                        });
+                    }
+                }
+            );
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 };

@@ -2,7 +2,7 @@
     <p class="star-text d-flex justify-content-center">Your review:</p>
     <!-- prettier-ignore -->
     <div class="stars d-flex justify-content-center">
-        <% let found = true; %>
+        <% let notRated = true; %>
         <% ratings.forEach((rating) => { %>
             <% if (rating.user_id === user.email) { %>
                 <form class="stars" method="details/update_rating" action="post"></form>
@@ -13,7 +13,8 @@
                     <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars fas fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars fas fa-star"></i></a>
-                    <% found = false; %>
+                    <% notRated = false %>
+
                 <% } else if (rating.rating === 4) { %>
 
                     <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
@@ -21,7 +22,8 @@
                     <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars fas fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
-                    <% found = false; %>
+                    <% notRated = false %>
+
                 <% } else if (rating.rating === 3) { %>
                     
                     <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
@@ -29,7 +31,8 @@
                     <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars fas fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
-                    <% found = false; %>
+                    <% notRated = false %>
+
                 <% } else if (rating.rating === 2) { %>
 
                     <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
@@ -37,7 +40,8 @@
                     <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars far fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
-                    <% found = false; %>
+                    <% notRated = false %>
+
                 <% } else if (rating.rating === 1) { %>
 
                     <a href="/details/update_rating?id=<%= movie.id %>&value=1"><i class="ratingStars fas fa-star"></i></a>
@@ -45,12 +49,13 @@
                     <a href="/details/update_rating?id=<%= movie.id %>&value=3"><i class="ratingStars far fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=4"><i class="ratingStars far fa-star"></i></a>
                     <a href="/details/update_rating?id=<%= movie.id %>&value=5"><i class="ratingStars far fa-star"></i></a>
-                    <% found = false; %>
+                    <% notRated = false %>
+
                 <% } %>
             </form>                                                                                         
             <% } %>
         <% }) %>  
-        <% if (ratings.length === 0) { %>
+        <% if (notRated) { %>
             <p class="stars">
                 <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=1"><i class="ratingStars far fa-star"></i></a>
                 <a href="/details/add_rating?id=<%= movie.id %>&release_date=<%= movie.release_date %>&value=2"><i class="ratingStars far fa-star"></i></a>
@@ -142,10 +147,9 @@
             <i class="ratingStars far fa-star"></i>
             <i class="ratingStars far fa-star"></i>
             <i class="ratingStars far fa-star"></i>
-                                                                        
+        </p>                                                                
         <% } else { %>
-            No reviews for this movie yet
+            <p class="movie-overview">No reviews for this movie yet</p> 
         <% } %>
-        </p>
     </div>
 </div>

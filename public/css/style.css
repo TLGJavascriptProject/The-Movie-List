@@ -67,6 +67,11 @@
   text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 1);
 }
 
+.favorite {
+  color: #fff000;
+  font-size: 2rem;
+}
+
 .ratingStars {
   color: #fff000;
 }
