@@ -7,6 +7,27 @@ const comments = require('../models/comments');
 
 const uri = 'https://api.themoviedb.org/3/movie/';
 
+exports.add_favorite = (req, res) => {
+    const movie_id = req.query.id;
+    const email = req.oidc.user.email;
+
+    users.findOne({
+        email: email
+    }, {
+        $push: {
+            favorites: movie_id
+        }
+    }, {
+        upsert: true
+    }, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.redirect(`/details?id=${movie_id}`);
+        }
+    });
+};
+
 exports.delete_comment = (req, res) => {
     const movie_id = req.body.movie_id;
 
@@ -29,6 +50,27 @@ exports.update_comment = (req, res) => {
         _id: req.params.id
     }, {
         comment: textBody
+    }, {
+        upsert: true
+    }, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.redirect(`/details?id=${movie_id}`);
+        }
+    });
+};
+
+exports.update_rating = (req, res) => {
+    const movie_id = req.query.id;
+    const value = req.query.value;
+    const email = req.oidc.user.email;
+
+    ratings.findOneAndUpdate({
+        movie_id: movie_id,
+        user_id: email
+    }, {
+        rating: value
     }, {
         upsert: true
     }, (err) => {
@@ -105,7 +147,7 @@ exports.add_rating = (req, res) => {
         .catch(err => console.error(err));
 };
 
-// UNTESTED ROUTE add comment to movie route
+// add comment to movie route
 exports.add_comment = (req, res) => {
     const movie_id = req.body.movie_id;
     const release_date = req.body.release_date;

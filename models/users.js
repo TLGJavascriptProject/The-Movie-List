@@ -10,6 +10,9 @@ const user = new Schema({
     type: String,
     required: true,
   },
+  favorites: [{
+    type: String,
+  }],
 });
 
 module.exports = mongoose.model("users", user);
