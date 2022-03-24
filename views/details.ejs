@@ -14,7 +14,7 @@
                 <%= movie.title %>
               </h1>
               <h3 class="home-subtitle mb-3">
-                "<%= movie.tagline %>"
+                <%= movie.tagline %>
               </h3>
               <h5 class="col-5 movie-info d-flex justify-content-between mb-3">
                 <span class="d-flex justify-content-start"><%= movie.genres[0].name %></span> 
@@ -33,8 +33,9 @@
             </div>
 
             <div class="row d-flex justify-content-center mb-5">
-              <button type="button" class="col-1 d-flex justify-content-center btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#trailerModal">Watch Trailer</button>
+              <a href="" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                <img class="trailer-img" src="/media/trailer.png" alt="Watch Trailer">
+              </a>
             </div>
 
             <div class="row d-flex justify-content-center mb-5">

@@ -1,0 +1,39 @@
+<%- include('partials/head.ejs') %>
+<body class="homepage">
+<%- include('partials/nav.ejs') %>
+
+    <div class="container my-5">
+      <div class="row text-center">
+        <h1 class="home-title mb-3">The Movie List</h1>
+        <h3 class="home-subtitle">Coming Soon to a Theater Near You</h3>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <% movies.forEach((movie)=> { %>
+          <a class="col-md-2 card movie-card g-0 m-1" href="/details?id=<%= movie.id %>">
+            <img src="https://image.tmdb.org/t/p/w500/<%= movie.poster_path %>" class="card-img-top card-poster"
+              alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= movie.title %>
+              </h5>
+              <p class="card-text">
+                <% const date = new Date(movie.release_date);
+                   const formattedDate = date.toLocaleString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric"
+                   });
+                %>
+                <%= formattedDate %>
+              </p>
+            </div>
+          </a>
+          <% }); %>
+      </div>
+    </div>
+    </body>
+
+    </html>
