@@ -12,7 +12,7 @@
 
 - [x] Add favorite movies
 - [x] Show favorite moves
-- [] Allow users to search by genre
+[] Allow users to search by genre
 - [] Allow users to search by actor
 - [] Allow users to search by release year
 - [] Use dynamo backend instead of mongo
