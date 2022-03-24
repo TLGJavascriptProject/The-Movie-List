@@ -24,6 +24,7 @@ Here's a walkthrough of implemented User Stories:
 
 <img src='https://recordit.co/K61PIGxF04.gif' width=500>
 
+RecordIt [External Link](https://recordit.co/K61PIGxF04).
 GIF created with [RecordIt](https://recordit.co).
 
 ## Wireframe
