@@ -18,6 +18,14 @@
 - [] Use dynamo backend instead of mongo
 - [] Transition to React
 
+## APP Walkthrough GIF
+
+Here's a walkthrough of implemented User Stories:
+
+<img src='https://recordit.co/K61PIGxF04.gif' width=500>
+
+GIF created with [RecordIt](https://recordit.co).
+
 # Wireframe
 ![](homepage.jpg)
 ![](Slide1.jpeg)
